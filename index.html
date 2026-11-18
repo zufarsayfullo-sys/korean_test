@@ -1,0 +1,710 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TOPIK II 109 - Vocabulary Quiz</title>
+<style>
+:root {
+  --wine:#762b49;
+  --wine-dark:#541a32;
+  --bg:#f7f5f7;
+  --ink:#20212b;
+  --muted:#74727d;
+  --line:#e5e1e7;
+  --green:#16834b;
+  --red:#c03946;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+}
+.container{
+  width:min(100%,720px);
+  margin:auto;
+  padding:18px 14px 45px;
+}
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:22px;
+}
+.logo{
+  font-weight:800;
+  font-size:19px;
+  color:var(--wine);
+}
+.tag{
+  background:#eee4e9;
+  color:var(--wine);
+  border-radius:30px;
+  padding:7px 12px;
+  font-size:12px;
+  font-weight:700;
+}
+.card{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:24px 20px;
+  box-shadow:0 6px 22px #27152208;
+}
+h1{
+  font-size:27px;
+  margin:0 0 14px;
+}
+p{line-height:1.65}
+.muted{color:var(--muted)}
+.center{text-align:center}
+.hidden{display:none!important}
+button{
+  font:inherit;
+  cursor:pointer;
+  touch-action:manipulation;
+}
+.primary{
+  width:100%;
+  padding:16px;
+  border:0;
+  border-radius:12px;
+  background:var(--wine);
+  color:white;
+  font-weight:750;
+  font-size:16px;
+}
+.primary:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}
+.secondary{
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:white;
+  padding:12px 18px;
+  font-weight:650;
+}
+.stats{
+  display:flex;
+  justify-content:space-between;
+  color:var(--muted);
+  font-size:14px;
+  margin-bottom:10px;
+}
+.progress{
+  height:8px;
+  background:#eee8ec;
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:25px;
+}
+.bar{
+  height:100%;
+  width:0;
+  background:var(--wine);
+  transition:width .25s;
+}
+.question{
+  text-align:center;
+  padding:20px 0 28px;
+}
+.question h2{
+  font-size:clamp(22px,5vw,31px);
+  line-height:1.5;
+  overflow-wrap:anywhere;
+  word-break:keep-all;
+  margin:12px 0;
+}
+.options{
+  display:grid;
+  gap:11px;
+}
+.option{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  min-height:64px;
+  padding:13px;
+  border:1.5px solid var(--line);
+  border-radius:13px;
+  background:white;
+  text-align:left;
+  color:var(--ink);
+  line-height:1.5;
+}
+.option.selected{
+  border-color:var(--wine);
+  background:#f8eff3;
+}
+.option.correct{
+  border-color:var(--green);
+  background:#e8f7ee;
+}
+.option.wrong{
+  border-color:var(--red);
+  background:#fcebed;
+}
+.letter{
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+  width:32px;
+  height:32px;
+  border-radius:9px;
+  background:#f0edf1;
+  font-size:13px;
+  font-weight:800;
+}
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:25px;
+}
+.actions .primary{flex:1}
+.feedback{
+  margin-top:16px;
+  font-size:14px;
+  font-weight:700;
+}
+.score{
+  font-size:62px;
+  font-weight:850;
+  color:var(--wine);
+  margin:10px 0;
+}
+.summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin:24px 0;
+}
+.statbox{
+  background:var(--bg);
+  padding:17px;
+  border-radius:13px;
+  text-align:center;
+}
+.statbox strong{
+  display:block;
+  font-size:26px;
+}
+.review-item{
+  border-bottom:1px solid var(--line);
+  padding:15px 0;
+  overflow-wrap:anywhere;
+}
+.review-item:last-child{border-bottom:0}
+.review-item p{margin:7px 0}
+.good{color:var(--green)}
+.bad{color:var(--red)}
+.small{font-size:13px}
+@media(max-width:480px){
+  .container{padding:12px 10px 32px}
+  .card{padding:20px 15px}
+  h1{font-size:23px}
+  .option{font-size:14px}
+  .score{font-size:52px}
+}
+</style>
+</head>
+<body>
+
+<main class="container">
+<header>
+  <div class="logo">TOPIK II · 109회</div>
+  <div class="tag">KOREAN × UZBEK</div>
+</header>
+
+<section id="start" class="card">
+  <h1>Vocabulary Challenge</h1>
+  <p class="muted">
+    TOPIK II 109회 — 1–50-savollar lug'ati
+  </p>
+  <p>
+    Koreyscha iborani o'qing va uning
+    to'g'ri o'zbekcha tarjimasini tanlang.
+  </p>
+  <div class="summary">
+    <div class="statbox">
+      <strong id="totalCount">47</strong>
+      <span class="small">Savollar</span>
+    </div>
+    <div class="statbox">
+      <strong>5</strong>
+      <span class="small">Variantlar</span>
+    </div>
+  </div>
+  <p class="muted small">
+    Har bir savolda bitta to'g'ri javob bor.
+    Savollar va javob variantlari aralashtiriladi.
+    Yakunda natijangiz foizda ko'rsatiladi.
+  </p>
+  <button class="primary" onclick="startQuiz()">
+    Testni boshlash →
+  </button>
+</section>
+
+<section id="quiz" class="card hidden">
+  <div class="stats">
+    <span id="counter"></span>
+    <span id="progressText"></span>
+  </div>
+  <div class="progress">
+    <div class="bar" id="progressBar"></div>
+  </div>
+  <div class="question">
+    <div class="muted small">
+      To'g'ri tarjimani tanlang
+    </div>
+    <h2 id="questionText" lang="ko"></h2>
+  </div>
+  <div id="options" class="options"></div>
+  <div id="feedback" class="feedback"
+       aria-live="polite"></div>
+  <div class="actions">
+    <button class="primary" id="nextBtn"
+            onclick="nextQuestion()" disabled>
+      Keyingi savol →
+    </button>
+  </div>
+</section>
+
+<section id="result" class="card hidden">
+  <div class="center">
+    <h1>Test natijasi</h1>
+    <div class="score" id="scorePercent">0%</div>
+    <p class="muted" id="resultMessage"></p>
+  </div>
+  <div class="summary">
+    <div class="statbox">
+      <strong class="good" id="correctCount">0</strong>
+      <span>To'g'ri</span>
+    </div>
+    <div class="statbox">
+      <strong class="bad" id="wrongCount">0</strong>
+      <span>Noto'g'ri</span>
+    </div>
+  </div>
+  <button class="primary" onclick="startQuiz()">
+    Qayta boshlash ↻
+  </button>
+  <button class="secondary"
+          style="width:100%;margin-top:10px"
+          onclick="toggleReview()">
+    Javoblarni ko'rish
+  </button>
+  <div id="review" class="hidden"
+       style="margin-top:20px"></div>
+</section>
+</main>
+
+<script>
+"use strict";
+
+/*
+  Data format:
+  [Korean phrase, Uzbek translation]
+
+  The supplied vocabulary is retained, including
+  incomplete or potentially mistranscribed entries.
+*/
+
+const vocabulary = [
+  // 1–25
+  [
+    "수사 소속에 소속되다",
+    "Politsiya bo'limiga tegishli (a'zo) bo'lmoq"
+  ],
+  [
+    "문제점을 지적하다",
+    "Muammoli tomonlarini ko'rsatib o'tmoq"
+  ],
+  [
+    "비응급 상황에서 공공 구급차를 이용하면 비용을 내야 하는 국가가 있다",
+    "Favqulodda bo'lmagan vaziyatlarda davlat tez yordam mashinasidan foydalanganda to'lov qilish kerak bo'lgan mamlakatlar bor"
+  ],
+  [
+    "안내견을 교육하는 사람",
+    "Yo'l ko'rsatuvchi itlarni tayyorlaydigan shaxs"
+  ],
+  [
+    "시험 시 상황에 대처하는 능력도 평가하다",
+    "Imtihon paytida vaziyatga moslashish qobiliyatini ham baholamoq"
+  ],
+  [
+    "기준을 세분화해야 한다",
+    "Mezonlarni kichik qismlarga bo'lish kerak"
+  ],
+  [
+    "상대방의 의견을 일부 인정하고 자기의 주장을 펼친다",
+    "Suhbatdoshining fikrini qisman tan olib, o'z fikrini ilgari surmoq"
+  ],
+  [
+    "국제 단위 측정 등장과 발전",
+    "Xalqaro o'lchov birligining paydo bo'lishi va rivojlanishi"
+  ],
+  [
+    "18세 말기에 만들어졌다",
+    "18-asr oxirida yasalgan (tuzilgan)"
+  ],
+  [
+    "최우사 직원 발표 - 성과를 높이 평가하다",
+    "Eng yaxshi xodim e'loni - natijasini yuqori baholamoq"
+  ],
+  [
+    "김민우는 용관로 업무를 맡고 있다",
+    "Kim Minu eritish pechi (konverter) ishlarini bajarmoqda"
+  ],
+  [
+    "지의식물은 가치를 파악할 필요가 있다",
+    "Dorivor o'simliklarning qiymatini aniqlash kerak"
+  ],
+  [
+    "화학 약품을 사용했다",
+    "Kimyoviy preparatlardan foydalangan"
+  ],
+  [
+    "활용한 사례가 많지 않다",
+    "Amalda qo'llanilgan holatlar ko'p emas"
+  ],
+  [
+    "직접 작성해야 한다",
+    "O'zi (shaxsan) yozishi kerak"
+  ],
+  [
+    "밝혀진다",
+    "Aniqlanmoqda (ma'lum bo'lmoqda)"
+  ],
+  [
+    "유무죄가 바뀔 될 수 있다",
+    "Aybdor yoki aybsizligi o'zgarishi mumkin"
+  ],
+  [
+    "운석 지형 형성 과정",
+    "Meteorit relefi (yer yuzasi) hosil bo'lish jarayoni"
+  ],
+  [
+    "산으로 둘러싸여 있다",
+    "Tog'lar bilan o'ralgan"
+  ],
+  [
+    "금리 / 중앙은행이 금리를 인하해도 효과를 못 거둔다",
+    "Foiz stavkasi / Markaziy bank foiz stavkasini pasaytirsa ham samara bermayapti"
+  ],
+  [
+    "자료를 보여주고 이해를 돕다",
+    "Ma'lumotlarni ko'rsatib, tushunishga yordam bermoq"
+  ],
+  [
+    "높은 생산비는 문제 중 하나였다",
+    "Yuqori ishlab chiqarish narxi muammolardan biri edi"
+  ],
+  [
+    "기대감을 드러내다",
+    "Kutish hissiyotini (umidni) namoyon etmoq"
+  ],
+  [
+    "잔상이 빛의 자극에 반응하는 자연스러운 형상이다",
+    "Qoldiq tasvir yorug'lik ta'siriga javob beradigan tabiiy shakldir"
+  ],
+  [
+    "예시를 들어 개념을 설명하고 있다",
+    "Misollar keltirib, tushunchani tushuntirmoqda"
+  ],
+
+  // 26–50 section: supplied entries 4–25
+  [
+    "그럼 5시에 역에서 만나자",
+    "Unday bo'lsa, soat 5 da stansiyada uchrashamiz"
+  ],
+  [
+    "거기에 두었나 봐요",
+    "U yerga qo'ygan ko'rinadi"
+  ],
+  [
+    "괜찮아져서 다행이네요",
+    "Tuzalib ketganidan xursandman (yaxshi bo'libdi)"
+  ],
+  [
+    "그럼 준비한 자료를 가져해주세요",
+    "Unday bo'lsa, tayyorlagan ma'lumotlaringizni olib keling"
+  ],
+  [
+    "아무래도 새로 바꿔야 할 것 같아요",
+    "Baribir yangisiga almashtirish kerakka o'xshaydi"
+  ],
+  [
+    "화장실에 다녀온다",
+    "Hojatxonaga borib kelmoqda"
+  ],
+  [
+    "사진을 수정한다",
+    "Rasmni tahrirlamoqda"
+  ],
+  [
+    "신청서를 작성하다",
+    "Ariza to'ldirmoq"
+  ],
+  [
+    "풍선을 가져온다",
+    "Shar olib kelmoqda"
+  ],
+  [
+    "여자가 동아리에 가입하려고 한다",
+    "Ayol (qiz) to'garakka a'zo bo'lmoqchi"
+  ],
+  [
+    "불꽃이 전시되는 동안 배를 이동하지 않는다",
+    "Mushakbozlik namoyish qilinayotgan vaqtda kema harakatlantirilmaydi"
+  ],
+  [
+    "담당 직원이 구조대에 신고했다",
+    "Mas'ul xodim qutqaruv xizmatiga xabar berdi"
+  ],
+  [
+    "유명한 빵집을 찾아다녔다",
+    "Mashhur non (qandolat) do'konlarini izlab bordi"
+  ],
+  [
+    "발표하기 전에 연습해야 한다",
+    "Taqdimot qilishdan oldin mashq qilish kerak"
+  ],
+  [
+    "여러 회사에 지원해야 한다",
+    "Bir nechta kompaniyalarga hujjat topshirish kerak"
+  ],
+  [
+    "1층에 가게가 있어서 마음에 든다",
+    "1-qavatda do'kon borligi yoqdi"
+  ],
+  [
+    "치아 관리 방법을 알리는 데 동화가 도움이 된다",
+    "Tishni parvarish qilish usullarini o'rgatishda ertaklar yordam beradi"
+  ],
+  [
+    "제도가 이 부서에 부합하지 않다",
+    "Tizim ushbu bo'limga mos kelmaydi"
+  ],
+  [
+    "일을 할 자료를 많이 검토해야 한다",
+    "Ish uchun ma'lumotlarni ko'p ko'rib chiqish kerak"
+  ],
+  [
+    "운전면허 수업에 문의하려고 한다",
+    "Haydovchilik guvohnomasi darslari haqida ma'lumot olmoqchi"
+  ],
+  [
+    "교재를 제공하다",
+    "O'quv qo'llanmasi bilan ta'minlamoq"
+  ],
+  [
+    "자료 조사 결과 전문가들이 협력해서",
+    "Ma'lumotlarni o'rganish natijasi mutaxassislar hamkorligida"
+  ]
+];
+
+let questions = [];
+let index = 0;
+let selected = null;
+let score = 0;
+let history = [];
+
+const $ = id => document.getElementById(id);
+
+function shuffle(items){
+  const a = [...items];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function show(section){
+  ["start","quiz","result"].forEach(id=>{
+    $(id).classList.toggle("hidden",id!==section);
+  });
+  window.scrollTo(0,0);
+}
+
+function createQuestions(){
+  return shuffle(vocabulary.map(([ko,uz],id)=>{
+    const others=shuffle(
+      vocabulary
+        .filter((_,i)=>i!==id)
+        .map(item=>item[1])
+        .filter(t=>t!==uz)
+    );
+    const options=shuffle([uz,...others.slice(0,4)]);
+    return {ko,uz,options};
+  }));
+}
+
+function startQuiz(){
+  questions=createQuestions();
+  index=0;
+  selected=null;
+  score=0;
+  history=[];
+  $("review").classList.add("hidden");
+  $("review").replaceChildren();
+  show("quiz");
+  renderQuestion();
+}
+
+function renderQuestion(){
+  selected=null;
+  const q=questions[index];
+
+  $("counter").textContent=
+    `Savol ${index+1} / ${questions.length}`;
+
+  $("progressText").textContent=
+    `${Math.round(index/questions.length*100)}%`;
+
+  $("progressBar").style.width=
+    `${index/questions.length*100}%`;
+
+  $("questionText").textContent=q.ko;
+  $("feedback").textContent="";
+  $("nextBtn").disabled=true;
+  $("nextBtn").textContent=
+    index===questions.length-1
+      ?"Natijani ko'rish →"
+      :"Keyingi savol →";
+
+  const area=$("options");
+  area.replaceChildren();
+
+  q.options.forEach((answer,i)=>{
+    const btn=document.createElement("button");
+    btn.className="option";
+    btn.type="button";
+
+    const letter=document.createElement("span");
+    letter.className="letter";
+    letter.textContent="ABCDE"[i];
+
+    const label=document.createElement("span");
+    label.textContent=answer;
+
+    btn.append(letter,label);
+    btn.onclick=()=>selectAnswer(i);
+    area.appendChild(btn);
+  });
+}
+
+function selectAnswer(i){
+  if(selected!==null)return;
+
+  selected=i;
+  const q=questions[index];
+  const answer=q.options[i];
+  const correct=answer===q.uz;
+
+  if(correct)score++;
+
+  history.push({
+    ko:q.ko,
+    chosen:answer,
+    correct:q.uz,
+    isCorrect:correct
+  });
+
+  const buttons=[...$("options").children];
+
+  buttons.forEach((btn,j)=>{
+    btn.disabled=true;
+    if(q.options[j]===q.uz){
+      btn.classList.add("correct");
+    }else if(j===i){
+      btn.classList.add("wrong");
+    }
+  });
+
+  const feedback=$("feedback");
+  feedback.textContent=correct
+    ?"✓ To'g'ri javob!"
+    :"✕ Noto'g'ri javob.";
+  feedback.className="feedback "+(correct?"good":"bad");
+
+  $("nextBtn").disabled=false;
+}
+
+function nextQuestion(){
+  if(selected===null)return;
+  index++;
+  if(index>=questions.length){
+    showResults();
+  }else{
+    renderQuestion();
+    window.scrollTo(0,0);
+  }
+}
+
+function showResults(){
+  show("result");
+
+  const total=questions.length;
+  const percent=Math.round(score/total*100);
+
+  $("scorePercent").textContent=percent+"%";
+  $("correctCount").textContent=score;
+  $("wrongCount").textContent=total-score;
+
+  $("resultMessage").textContent=
+    percent>=90
+      ?"Ajoyib natija!"
+      :percent>=80
+      ?"Juda yaxshi!"
+      :percent>=60
+      ?"Yaxshi! Yana mashq qiling."
+      :"Lug'atlarni takrorlab, yana urinib ko'ring.";
+
+  $("review").replaceChildren();
+
+  history.forEach((item,i)=>{
+    const box=document.createElement("div");
+    box.className="review-item";
+
+    const heading=document.createElement("strong");
+    heading.textContent=
+      `${i+1}. ${item.ko}`;
+
+    const status=document.createElement("p");
+    status.className=item.isCorrect?"good":"bad";
+    status.textContent=item.isCorrect
+      ?"✓ To'g'ri"
+      :"✕ Noto'g'ri";
+
+    const chosen=document.createElement("p");
+    chosen.className="small";
+    chosen.textContent="Sizning javobingiz: "+item.chosen;
+
+    const correct=document.createElement("p");
+    correct.className="small good";
+    correct.textContent="To'g'ri javob: "+item.correct;
+
+    box.append(heading,status,chosen,correct);
+    $("review").appendChild(box);
+  });
+}
+
+function toggleReview(){
+  const review=$("review");
+  review.classList.toggle("hidden");
+
+  if(!review.classList.contains("hidden")){
+    review.scrollIntoView({behavior:"smooth"});
+  }
+}
+
+$("totalCount").textContent=vocabulary.length;
+</script>
+</body>
+</html>
